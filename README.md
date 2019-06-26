@@ -1,6 +1,6 @@
 # Mid-Term
 
-!["Homepage"](https://github.com/Cain310/midTermProject/blob/master/homepage.pngng)
+!["Homepage"](https://github.com/Cain310/midTermProject/blob/master/homepage.png)
 
 # Goal
 
