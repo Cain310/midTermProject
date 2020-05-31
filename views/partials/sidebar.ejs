@@ -1,46 +1,36 @@
+   
 </div>
+
 <div class="col-4">
-  <h3>Welcome</h3>
-  <h5>Favorites:</h5>
-  <div class="marker-info">
-    <input class="marker-title" type="text" placeholder="Marker title">
-    <textarea class="marker-description" col="50" placeholder="Marker description"></textarea>
-    <input class="picture-url" type="text" placeholder="Please share a url for a picture of this location">
-    <div class="left-list">
-      <div class="current-map-title">
-        <h3>Current Map</h3>
-
-      </div>
-      <div class="map-markers">
-        <h3>Map Markers</h3>
-        <ul class="map-markers-list">
-        </ul>
-      </div>
-      <div class="buttons">
-        <button class="save-button">save</button>
-        <button class="cancel-button">cancel</button>
-      </div>
-      <form>
-        <div class="update-marker">
-          <input name="marker-name" class="update-marker-title" type="text" placeholder="Marker title">
-          <textarea class="update-marker-description" col="50" placeholder="Marker description"></textarea>
-          <input name="marker-url" class="update-picture-url" type="text"
-            placeholder="Please share a url for a picture of this location">
-
-          <div class="buttons">
-            <button class="update-button">update</button>
-            <button class="delete-button">delete</button>
-            <button class="cancel-update-button">cancel</button>
-          </div>
-        </div>
-    </div>
+  <div>
+    <form>
+      <button id="capture-button" class="btn btn-outline-primary" type="Capture Map" method="POST" action="/maps/new" class="saveMap">Capture Map</button>
     </form>
-    <% for (let index in maps) { %>
-    <li><strong><a href="/?mapid=<%= maps[index].id %>"><%= maps[index].name %></a></strong>
-      <% }; %>
-      <% for (let index in currentPlaces) { %>
-    <li><a><%= currentPlaces[index].description %></a></li>
-    <% }; %>
-    <h5 class="category-list--title">List of points:</h5>
-    <ul class="list-group"></ul>
   </div>
+  
+
+  <div>
+  <% if (user) {%>
+<div id="maplist">
+  <h1>Maps:</h1>
+
+    <% for (let index in maps) { %>
+      <ul class="list-group-item list-group-item-action active" style="list-style: none;">
+        <li><strong><a class="list-group-item list-group-item-action" href="/?mapid=<%= maps[index].id %>"><%= maps[index].name %></a></strong></li>
+      </ul>
+    <% }; %>
+    <h1 class="category-list--title">Points:</h1>
+    <% for (let index in currentPlaces) { %>
+      <ul class="list-group list-group-flush">
+        <li><a class="list-group-item"  href="#list-home" role="tab" aria-controls="home"><%= currentPlaces[index].description %></a></li>
+      </ul>
+    <% }; %>
+    
+  <% } else { %>
+
+  <p id="pleaselogin">Please Loggin to see your saved maps</p>
+
+   <% }; %>
+      </div>
+
+

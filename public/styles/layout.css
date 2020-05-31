@@ -1,0 +1,80 @@
+/*HEADER*/
+.navbar {
+  -webkit-box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black;
+  z-index: 9999;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+
+  /* the rest of your styling */
+}
+
+.nav-title {
+  text-align: center;
+}
+
+.logout-div {
+  color: white;
+  text-align: right;
+  margin: -5px 20px -10px 100;
+}
+
+#background {
+  background-image: url("background.jpeg");
+  opacity: 0.9;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}
+
+/*BODY*/
+#main-section {
+  margin-top: 65px;
+}
+
+.sidebar {
+  margin-top: 10px;
+  padding-left: -20px;
+}
+
+.list-group-item {
+  background-color: white;
+}
+
+#new-point {
+  margin: 20px;
+}
+
+#staticEmail2 {
+  color: white;
+  width: 200px;
+}
+
+#capture-button {
+  margin: 20px;
+  position: relative;
+  float: right;
+}
+
+footer {
+  background-color: aliceblue;
+  width: 100%;
+}
+
+h1 {
+  color: white;
+  text-align: right;
+  margin: 10px 10px 10px 0;
+}
+
+#pleaselogin {
+  color: white;
+  text-align: right;
+  margin: 25px 10px 10px 10px;
+}
+
+#maplist {
+  margin-top: 80px;
+}

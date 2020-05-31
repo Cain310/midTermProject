@@ -11,7 +11,7 @@ var $ = require("jquery");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
+app.use(express.static("/styles" + "/public"));
 app.use(
   cookieSession({
     name: "session",
@@ -21,7 +21,6 @@ app.use(
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   })
 );
-
 
 //-----Helper Functions
 //Makes sure login and registration are valid
@@ -48,76 +47,83 @@ function searchPlaces(places, query_mapid) {
   let currentPoints = [];
   for (let i = 0; i < places.length; i++) {
     if (places[i].map_id === query_mapid) {
-      currentPoints.push(places)
+      currentPoints.push(places);
       return currentPoints;
     }
   }
 }
-
 
 //All GET routes here
 app.get("/", (req, res) => {
   let templateVars;
   // let currentMap;
   let map;
-  let currentMap = { zoom: 7, lat: 36.7783, lng: -119.4179 }
+  let currentMap = { zoom: 7, lat: 36.7783, lng: -119.4179 };
   if (!req.session["user_email"]) {
     // console.log(currentMap)
     let currentPlaces = null;
-    User.getMaps(function (maps) {
+    User.getMaps(function(maps) {
       let templateVars = {
-        user: null, maps: maps, places: null,
-        currentMap: JSON.stringify(currentMap), currentPlaces: (currentPlaces)
+        user: null,
+        maps: maps,
+        places: null,
+        currentMap: JSON.stringify(currentMap),
+        currentPlaces: currentPlaces
       };
       res.render("index.ejs", templateVars);
-    })
+    });
   } else {
     User.getOneByEmail(req.session["user_email"]).then(user => {
-      User.getMaps(function (maps) {
+      User.getMaps(function(maps) {
         currentMap = search(maps, Number(req.query.mapid));
-        map = maps
-      })
-      User.getPlaces(function (places) {
+        map = maps;
+      });
+      User.getPlaces(function(places) {
         let currentPlaces = searchPlaces(places, Number(req.query.mapid));
         if (currentPlaces) {
           templateVars = {
-            user: user, maps: map, currentMap: JSON.stringify(currentMap),
-            currentPlaces: (currentPlaces[0])
-          }
+            user: user,
+            maps: map,
+            currentMap: JSON.stringify(currentMap),
+            currentPlaces: currentPlaces[0]
+          };
           res.render("index.ejs", templateVars);
         } else {
-          let currentMap = { zoom: 7, lat: 36.7783, lng: -119.4179 }
+          let currentMap = { zoom: 7, lat: 36.7783, lng: -119.4179 };
           templateVars = {
-            user: user, maps: map, currentMap: JSON.stringify(currentMap), currentPlaces: (currentPlaces)
-          }
+            user: user,
+            maps: map,
+            currentMap: JSON.stringify(currentMap),
+            currentPlaces: currentPlaces
+          };
 
           res.render("index.ejs", templateVars);
         }
       });
     });
   }
-})
+});
 
 //peramiter mapId is the users id whom is currently logged in
 //and clicks on the listed map name. should pull overlay of all places corresponding to that map.
 app.get("/users/places", (req, res) => {
-  User.getPlaces(mapId, function (data) {
+  User.getPlaces(mapId, function(data) {
     let templateVars = { user: user, places: places };
     res.render("index.ejs", templateVars);
-  })
-  res.redirect('/');
+  });
+  res.redirect("/");
 }),
-
   app.get("/users/maps", (req, res) => {
-    User.getUsersMaps(userId, function (data) {
-    })
-    res.redirect('/');
+    User.getUsersMaps(userId, function(data) {});
+    res.redirect("/");
   }),
-
   //register page users who are not already registered can register.
   //changes routes names from /register
   app.get("/users/new", (req, res) => {
-    let templateVars = { users: users[req.session["userId"]], showLogin: false };
+    let templateVars = {
+      users: users[req.session["userId"]],
+      showLogin: false
+    };
     res.render("index.ejs", templateVars);
   });
 
@@ -207,7 +213,8 @@ app.post("/login", (req, res) => {
       }
     });
   } else {
-    res.status(400).send("THOU shalt not pass invalid login");
+    res.status(400);
+    res.render("./partials/error.ejs");
   }
 });
 
@@ -220,11 +227,6 @@ app.post("/logout", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
-
-
-
-
-
 
 //Helper functions here
 //generates a hashed password using bcrypt
